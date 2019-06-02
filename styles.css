@@ -1,0 +1,63 @@
+#cardGame {
+    width: 1000px;
+    margin: auto;
+}
+#menu > span {
+    display: inline-block;
+    border: 1px solid black;
+    font-size: 32px;
+    padding: 0px 5px;
+    min-width: 180px;
+    text-align: right;
+}
+#menu > span > img {
+    position: relative;
+    top: 3px;
+}
+#enemies {
+    position: relative;
+    height: 120px;
+    background-color: #eee;
+    overflow: hidden;
+}
+.enemy {
+    position: absolute;
+    height: 120px;
+    width: 100px;
+}
+.enemy progress {
+    display: inline-block;
+    margin-left: 25px;
+    width: 50px;
+    color: red;
+}
+#towers {
+    position: relative;
+    height: 250px;
+    background-color: #efe;
+    display: flex;
+}
+.tower,
+.no-tower {
+    flex: 1;
+    font-size: 12px;
+    padding: 5px;
+}
+.tower {
+    background: url('img/tower.png') no-repeat bottom;
+}
+.no-tower button {
+    display: block;
+    margin: 0.4em auto;
+}
+#effects {
+    position: relative;
+    height: 40px;
+    background-color: #efe;
+    display: flex;
+    padding-top: 10px;
+}
+.effect {
+    flex: 1;
+    text-align: center;
+}
