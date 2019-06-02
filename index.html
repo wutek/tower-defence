@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Tower Defence</title>
+
+        <link rel="stylesheet" href="/styles.css" type="text/css">
+        <link rel="shortcut icon" href="img/tower.png">
+
+        <script src="js/vue.js" type="text/javascript"></script>
+        
+        <style>
+            #cardGame {
+                width: 1000px;
+                margin: auto;
+            }
+            #menu > span {
+                display: inline-block;
+                border: 1px solid black;
+                font-size: 32px;
+                padding: 0px 5px;
+                min-width: 180px;
+                text-align: right;
+            }
+            #menu > span > img {
+                position: relative;
+                top: 3px;
+            }
+            #enemies {
+                position: relative;
+                height: 120px;
+                background-color: #eee;
+                overflow: hidden;
+            }
+            .enemy {
+                position: absolute;
+                height: 120px;
+                width: 100px;
+            }
+            .enemy progress {
+                display: inline-block;
+                margin-left: 25px;
+                width: 50px;
+                color: red;
+            }
+            #towers {
+                position: relative;
+                height: 250px;
+                background-color: #efe;
+                display: flex;
+            }
+            .tower,
+            .no-tower {
+                flex: 1;
+                font-size: 12px;
+                padding: 5px;
+            }
+            .tower {
+                background: url('img/tower.png') no-repeat bottom;
+            }
+            .no-tower button {
+                display: block;
+                margin: 0.4em auto;
+            }
+            #effects {
+                position: relative;
+                height: 40px;
+                background-color: #efe;
+                display: flex;
+                padding-top: 10px;
+            }
+            .effect {
+                flex: 1;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="cardGame">
+            <!-- <button v-on:click="test">Test</button> -->
+            <h1>Tower Defence</h1>
+            <div id="menu">
+                <span>{{money}} <img src="img/gold.png" alt="gold"></span>
+                <span>{{lives}} <img src="img/lives.png" alt="lives"></span>
+                <!--<span>Spawn Rate: {{spawnRate}}</span>-->
+                <span>Score: {{score}}</span>
+                <span>Kills: {{kills}}</span>
+                <span>Time: {{time}}</span>
+            </div>
+            <div id="towers">
+                <tower v-for="tower in towers" v-on:pay="payMoney" v-bind:money="money" v-bind:key="tower.id" v-bind:tower="tower"></tower>
+            </div>
+            <div id="enemies">
+                <enemy v-for="enemy in enemies" v-bind:key="enemy.id" v-bind:enemy="enemy" v-bind:style="{left:Math.floor(enemy.position-50)+'px', background:enemy.img}"></enemy>
+            </div>
+            <p class="center">Choose one:</p>
+            <div id="effects">
+                <effect v-for="effect in effects" v-bind:key="effect.id" v-bind:effect="effect"></effect>
+            </div>
+            <ul>
+                <li v-for="enemy in enemies">id:{{enemy.id}} name:"{{enemy.name}}" armor:{{enemy.armor}} hp:{{enemy.hp}} position:{{enemy.position}}</li>
+            </ul>
+        </div>
+
+        <template id="template-tower">
+            <div v-if="tower.show" class="tower">
+                {{tower.name}}<br>
+                damage: {{tower.damage.value}} <button @click="upgrade('damage')">{{tower.damage.upgradeCost}}</button><br>
+                cooldown: {{tower.cooldown.value}} <button @click="upgrade('cooldown')">{{tower.cooldown.upgradeCost}}</button><br>
+                range: {{Math.max(tower.position-tower.range.value, -100)}} - {{Math.min(tower.position+tower.range.value, 1000)}} <button @click="upgrade('range')">{{tower.range.upgradeCost}}</button><br>
+                kills: {{tower.kills}}
+            </div>
+            <div v-else class="no-tower center">
+                <h2>Build:</h2>
+                <button v-on:click="buildBasic">Basic Tower (50)</button>
+                <button v-on:click="buildMagic">Magic Tower (50)</button>
+                <button v-on:click="buildTax">Tax Tower (50)</button>
+            </div>
+        </template>
+        
+        <script src="js/cardgame.js"></script>
+    </body>
+</html>
